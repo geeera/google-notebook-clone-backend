@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/@types/llama.d.ts","./src/llama/loader.ts","./src/models/chat.ts","./src/models/message.ts","./src/routes/chat.ts","./src/routes/message.ts","./src/utils/functions/getfilefromgridfs.ts"],"version":"5.9.2"}

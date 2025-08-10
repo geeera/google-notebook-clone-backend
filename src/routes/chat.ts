@@ -11,11 +11,11 @@ import fs from "fs-extra";
 import path from "path";
 
 const storage = multer.memoryStorage();
-const upload = multer({ dest: 'uploads/', storage: storage });
+const upload = multer({ dest: 'src/uploads/', storage: storage });
 const router = Router();
 
 const FILES_BUCKET_NAME = 'pdfs';
-const UPLOADS = path.resolve('./uploads');
+const UPLOADS = path.resolve('./src/uploads');
 await fs.ensureDir(UPLOADS);
 
 router.post('/upload', upload.single('file'), async (req, res) => {

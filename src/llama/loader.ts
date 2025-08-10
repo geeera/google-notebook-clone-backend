@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import PDFParser from "pdf2json";
 import path from "path";
 
-const STORAGE_ROOT = path.resolve('./storage');
+const STORAGE_ROOT = path.resolve('./src/storage');
 await fs.ensureDir(STORAGE_ROOT);
 
 const indexCache = new Map<string, VectorStoreIndex>();

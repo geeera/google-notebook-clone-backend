@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "node --loader tsx src/index.ts",
-    "build": "tsx",
+    "build": "npx tsc --build --verbose",
     "serve": "nodemon src/index.ts"
   },
   "author": "",
@@ -37,6 +37,7 @@
     "@types/multer": "^2.0.0",
     "@types/node": "^24.1.0",
     "nodemon": "^3.1.10",
+    "tsx": "^4.20.3",
     "typescript": "^5.9.2"
   }
 }
