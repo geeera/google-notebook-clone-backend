@@ -35,7 +35,6 @@ const corsConfig = {
     origin: process.env.CORS_FRONTEND_URI || '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    optionsSuccessStatus: 204,
 }
 
 app.use(cors(corsConfig));
@@ -45,7 +44,7 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', corsConfig.origin);
         res.header('Access-Control-Allow-Methods', corsConfig.methods.join(','));
         res.header('Access-Control-Allow-Headers', corsConfig.allowedHeaders.join(','));
-        return res.sendStatus(corsConfig.optionsSuccessStatus);
+        return res.sendStatus(204);
     }
     next();
 });
