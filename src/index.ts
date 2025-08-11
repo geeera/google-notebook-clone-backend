@@ -32,12 +32,12 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
 app.use(cors({
-    origin: process.env.CORS_URL || '*',
+    origin: process.env.CORS_FRONTEND_URI || '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.options('*', cors());
+// app.options('/*', cors());
 
 app.use((req, res, next) => {
     // console.log('--- Incoming request ---');
