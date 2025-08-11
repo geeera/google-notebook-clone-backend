@@ -31,13 +31,24 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
-app.use(cors({
+const corsConfig = {
     origin: process.env.CORS_FRONTEND_URI || '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 204,
+}
 
-// app.options('/*', cors());
+app.use(cors(corsConfig));
+
+app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Origin', corsConfig.origin);
+        res.header('Access-Control-Allow-Methods', corsConfig.methods.join(','));
+        res.header('Access-Control-Allow-Headers', corsConfig.allowedHeaders.join(','));
+        return res.sendStatus(corsConfig.optionsSuccessStatus);
+    }
+    next();
+});
 
 app.use((req, res, next) => {
     // console.log('--- Incoming request ---');
