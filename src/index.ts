@@ -32,9 +32,12 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
 app.use(cors({
-    origin: 'http://localhost:4200',
-    credentials: true,
+    origin: ['https://google-notebook-clone-frontend.onrender.com'], // список разрешённых фронтов
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.options('*', cors());
 
 app.use((req, res, next) => {
     // console.log('--- Incoming request ---');
