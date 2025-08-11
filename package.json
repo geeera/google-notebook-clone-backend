@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node --loader tsx src/index.ts",
+    "start": "node --import tsx src/index.ts",
     "build": "npx tsc --build --verbose",
     "serve": "nodemon src/index.ts"
   },
