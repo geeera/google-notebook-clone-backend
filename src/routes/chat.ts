@@ -46,10 +46,6 @@ router.post('/upload', upload.single('file'), async (req, res) => {
         const fileId = uploadStream.id.toString();
         console.log('fileId', fileId);
 
-        console.log('Calling uploadStream.end()');
-        uploadStream.end(file.buffer);
-        await createAndPersistIndex(filePath, fileId);
-
         uploadStream.on('finish', async () => {
             console.timeEnd('Upload finished');
             console.time('Start safe file');
@@ -66,6 +62,11 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             console.error(err);
             res.status(500).json({ error: err.message });
         });
+
+        console.log('Calling uploadStream.end()');
+        uploadStream.end(file.buffer);
+        await createAndPersistIndex(filePath, fileId);
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err });
