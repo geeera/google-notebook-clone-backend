@@ -42,9 +42,10 @@ router.post('/upload', upload.single('file'), async (req, res) => {
         }
 
         const uploadStream = bucket.openUploadStream(file.originalname);
-        uploadStream.end(file.buffer);
+        console.log('Upload started');
 
         uploadStream.on('finish', async () => {
+            console.log('Upload finished');
             const fileId = uploadStream.id.toString();
             const indexWithPersist = await createAndPersistIndex(filePath, fileId);
             const savedFile = await Chat.create({
@@ -60,6 +61,9 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             console.error(err);
             res.status(500).json({ error: err.message });
         });
+
+        console.log('Calling uploadStream.end()');
+        uploadStream.end(file.buffer);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err });
