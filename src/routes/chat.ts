@@ -42,15 +42,16 @@ router.post('/upload', upload.single('file'), async (req, res) => {
         }
 
         const uploadStream = bucket.openUploadStream(file.originalname);
-        console.log('Upload started');
+        console.time('Upload started')
+        const fileId = uploadStream.id.toString();
+        console.log('fileId', fileId);
+        await createAndPersistIndex(filePath, fileId);
 
         uploadStream.on('finish', async () => {
-            console.log('Upload finished');
-            const fileId = uploadStream.id.toString();
-            const indexWithPersist = await createAndPersistIndex(filePath, fileId);
+            console.time('Upload finished');
             const savedFile = await Chat.create({
                 chatId,
-                filePersistDirPath: indexWithPersist?.persistDirPath,
+                filePersistDirPath: fileId,
                 fileId,
             });
 
