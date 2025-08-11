@@ -31,6 +31,7 @@ LLAMA_API_KEY=<your_api_key>
 OPENAI_API_KEY=<your_api_key>
 MONGO_DB_URI=<your_mongodb_connection_string>
 OPENROUTER_API_KEY=<your_api_key>
+CORS_URL=http://localhost:4200
 ```
 ---
 
