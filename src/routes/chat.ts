@@ -45,16 +45,20 @@ router.post('/upload', upload.single('file'), async (req, res) => {
         console.time('Upload started')
         const fileId = uploadStream.id.toString();
         console.log('fileId', fileId);
+
+        console.log('Calling uploadStream.end()');
+        uploadStream.end(file.buffer);
         await createAndPersistIndex(filePath, fileId);
 
         uploadStream.on('finish', async () => {
-            console.time('Upload finished');
+            console.timeEnd('Upload finished');
+            console.time('Start safe file');
             const savedFile = await Chat.create({
                 chatId,
                 filePersistDirPath: fileId,
                 fileId,
             });
-
+            console.timeEnd('End safe file');
             res.json(savedFile);
         });
 
@@ -62,9 +66,6 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             console.error(err);
             res.status(500).json({ error: err.message });
         });
-
-        console.log('Calling uploadStream.end()');
-        uploadStream.end(file.buffer);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err });
